@@ -1,0 +1,76 @@
+html, body {
+	color: black;
+	background: white;
+	font: 13px "Courier New", monospace;
+	margin: 0;
+	padding: 0;
+}
+html, body, table, tr, th, td {
+	margin: 0;
+	padding: 0;
+}
+body { padding: 8px; }
+ul {
+	margin: 0.5em 0;
+	padding: 0;
+}
+li { list-style: none; }
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+tr:hover { background: #f7f7f7; }
+td {
+	/*white-space: pre;*/
+	padding: 0 2px;
+	vertical-align: top;
+}
+td, th { border: 1px solid #ddd; }
+.added { color: #900; }
+.removed { color: #777; }
+.changed { color: #93c; }
+.cell-number,
+.cell-type {
+	text-align: center;
+}
+.cell-path {
+	word-wrap: break-word;
+}
+.cell-date,
+.cell-date-diff,
+.cell-size,
+.cell-size-diff {
+	text-align: right;
+}
+
+#th-number    { width: 12px;  min-width: 12px;  }
+#th-type      { width: 12px;  min-width: 12px;  }
+#th-date      { width: 160px; min-width: 160px; }
+#th-date-diff { width: 120px; min-width: 120px; }
+#th-size      { width: 90px;  min-width: 90px;  }
+#th-size-diff { width: 90px;  min-width: 90px;  }
+
+.wait {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: white;
+	background: rgba(255, 255, 255, 0.85);
+	padding: 2px 4px;
+}
+#autoScrollLabel { vertical-align: middle; }
+#autoScrollCheckbox {
+	vertical-align: top;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+.rowsSorterLink {
+	text-decoration: none;
+	color: #009;
+}
+.rowsSorterNoDir { opacity: 0.25; filter: alpha(opacity=25); }
+.rowsSorterDir,
+.rowsSorterNoDir {
+	padding: 0 2px;
+}
