@@ -108,11 +108,7 @@ function printTableFooter() {
 	global $start;
 	echo '
 </table>
-<div id="state">
-'
-. _n(microtime(true) - $start, 3) . ' s | '
-. _n(memory_get_peak_usage(true)/1024/1024, 2) . ' MiB'
-. '
+' . getStats(microtime(true) - $start, memory_get_peak_usage(true)) . '
 </div>
 <style type="text/css">.wait { display: none; }</style>
 <script type="text/javascript" src="sortRows.js"></script>
@@ -122,6 +118,14 @@ function printTableFooter() {
 	new RowsSorter("compareResults").sortRows(0, false, true);
 </script>
 ';
+}
+function getStats($time, $memory, $desc = '') {
+	return '<div id="state">
+'
+. $desc
+. _n($time, 3) . ' s | '
+. _n($memory/1024/1024, 2) . ' MiB
+</div>';
 }
 
 function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {

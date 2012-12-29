@@ -103,6 +103,7 @@ else {
 
 $oldTime = null;
 $newTime = null;
+$saveTime = null;
 if(isset($_POST['compare'])) {
 	if(isset($_POST['old']) && isset($_POST['new'])) {
 		$oldTime = $_POST['old'];
@@ -110,7 +111,10 @@ if(isset($_POST['compare'])) {
 	}
 }
 elseif(isset($_POST['save'])) {
+	$saveTime = microtime(true);
 	saveSnapshot();
+	$saveTime = microtime(true) - $saveTime;
+	$saveMemory = memory_get_peak_usage(true);
 }
 elseif(isset($_POST['delete'])) {
 	foreach($_POST as $key => $val) {
@@ -127,6 +131,8 @@ printProjectsList($DIR);
 printSavedList($DIR);
 echo '</form>';
 
+if(isset($saveTime))
+	echo "\n" . getStats($saveTime, $saveMemory, 'Successfully saved: ') . "\n";
 if($oldTime && $newTime) {
 	$start = microtime(true);
 	printTableHeader();
