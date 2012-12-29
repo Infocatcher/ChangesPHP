@@ -6,11 +6,20 @@ require('config.php');
 require('changes.php');
 require('ui.php');
 
+if(isset($_POST['dir']) && is_dir($_POST['dir']))
+	$DIR = $_POST['dir'];
+else {
+	foreach($DIRS as $name => $_dir) {
+		$DIR = $_dir;
+		break;
+	}
+}
+
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Changes</title>
+	<title><?php printTitle($DIR); ?></title>
 	<meta charset="<?php echo $SERVER_CHARSET; ?>" />
 	<!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
 	<style type="text/css">
@@ -92,14 +101,6 @@ require('ui.php');
 
 <?php
 
-if(isset($_POST['dir']) && is_dir($_POST['dir']))
-	$DIR = $_POST['dir'];
-else {
-	foreach($DIRS as $name => $_dir) {
-		$DIR = $_dir;
-		break;
-	}
-}
 $oldTime = null;
 $newTime = null;
 if(isset($_POST['compare'])) {
