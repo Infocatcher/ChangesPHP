@@ -1,16 +1,5 @@
 <?php
 
-function printTitle($selectedDir) {
-	global $DIRS;
-	$dirName = $selectedDir;
-	foreach($DIRS as $name => $dir) {
-		if($dir === $selectedDir) {
-			$dirName = $name;
-			break;
-		}
-	}
-	echo 'Changes [' . $dirName . ']';
-}
 function printProjectsList($selectedDir) {
 	global $DIRS;
 	echo <<<HTML

@@ -6,20 +6,23 @@ require('config.php');
 require('changes.php');
 require('ui.php');
 
-if(isset($_POST['dir']) && is_dir($_POST['dir']))
+if(
+	isset($_POST['dir'])
+	&& is_dir($_POST['dir'])
+	&& ($DIR_NAME = array_search($_POST['dir'], $DIRS, true)) !== false
+) {
 	$DIR = $_POST['dir'];
+}
 else {
-	foreach($DIRS as $name => $_dir) {
-		$DIR = $_dir;
-		break;
-	}
+	$DIR = reset($DIRS);
+	$DIR_NAME = key($DIRS);
 }
 
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title><?php printTitle($DIR); ?></title>
+	<title>Changes [<?php echo $DIR_NAME; ?>]</title>
 	<meta charset="<?php echo $SERVER_CHARSET; ?>" />
 	<!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
 	<style type="text/css">
@@ -101,9 +104,7 @@ else {
 
 <?php
 
-$oldTime = null;
-$newTime = null;
-$saveTime = null;
+$oldTime = $newTime = $saveTime = null;
 if(isset($_POST['compare'])) {
 	if(isset($_POST['old']) && isset($_POST['new'])) {
 		$oldTime = $_POST['old'];
