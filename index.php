@@ -26,7 +26,10 @@ else {
 	<meta charset="<?php echo $SERVER_CHARSET; ?>" />
 	<!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
 	<style type="text/css">
-<?php readfile('styles.css'); ?>
+<?php
+	// Server may go to 503 error after compare with current state, so it's better to apply styles anyway
+	readfile('styles.css');
+?>
 
 	</style>
 	<script type="text/javascript" src="<?php echo $JS_PATH; ?>eventListener.js"></script>
