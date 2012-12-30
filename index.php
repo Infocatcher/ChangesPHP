@@ -22,7 +22,7 @@ else {
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Changes [<?php echo $DIR_NAME; ?>]</title>
+	<title>Changes [<?php echo htmlspecialchars($DIR_NAME, ENT_NOQUOTES); ?>]</title>
 	<meta charset="<?php echo $SERVER_CHARSET; ?>" />
 	<!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
 	<style type="text/css">
