@@ -8,6 +8,8 @@ function printProjectsList($selectedDir) {
 HTML;
 	foreach($DIRS as $name => $dir) {
 		$selected = $dir === $selectedDir ? ' selected="selected"' : '';
+		$dir  = htmlspecialchars($dir);
+		$name = htmlspecialchars($name);
 		echo "<option value=\"{$dir}\"{$selected}>{$name}</option>\n";
 	}
 	echo <<<HTML
