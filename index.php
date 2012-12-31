@@ -6,6 +6,8 @@ require('config.php');
 require('changes.php');
 require('ui.php');
 
+header('X-Frame-Options: DENY');
+
 if(
 	isset($_POST['dir'])
 	&& is_dir($_POST['dir'])
@@ -24,6 +26,7 @@ else {
 <head>
 	<title>Changes [<?php echo htmlspecialchars($DIR_NAME, ENT_NOQUOTES); ?>]</title>
 	<meta charset="<?php echo $SERVER_CHARSET; ?>" />
+	<script type="text/javascript">if(top != self) top.location.replace(location);</script>
 	<!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
 	<style type="text/css">
 <?php
