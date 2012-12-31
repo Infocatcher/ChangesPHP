@@ -47,7 +47,7 @@ function compareEntries(&$newEntries, &$oldEntries) {
 		//if(!array_key_exists($path, $oldEntries)) {
 		if(!isset($oldEntries[$path])) {
 			$info = parseEntryInfo($checksum);
-			printRow(++$i, 'added', '+', $path . $info['dir'], $info['date'], 'n/a', $info['size'], 'n/a');
+			printRow(++$i, 'added', '+', $path, $info['dir'], $info['date'], 'n/a', $info['size'], 'n/a');
 		}
 		elseif($checksum !== $oldEntries[$path]) {
 			$infoOld = parseEntryInfo($oldEntries[$path], true);
@@ -56,29 +56,39 @@ function compareEntries(&$newEntries, &$oldEntries) {
 			$ds = _dn($infoNew['size'], $infoOld['size']);
 			$d = date('Y-m-d H:i:s', $infoNew['date']);
 			$s = _n($infoNew['size']);
-			printRow(++$i, 'changed', '*', $path . $infoNew['dir'], $d, $dd, $s, $ds);
+			printRow(++$i, 'changed', '*', $path, $infoNew['dir'], $d, $dd, $s, $ds);
 		}
 	}
 	foreach($oldEntries as $path => $checksum) {
 		//if(!array_key_exists($path, $newEntries)) {
 		if(!isset($newEntries[$path])) {
 			$info = parseEntryInfo($checksum);
-			printRow(++$i, 'removed', '&#8722;', $path . $info['dir'], $info['date'], 'n/a', $info['size'], 'n/a');
+			printRow(++$i, 'removed', '&#8722;', $path, $info['dir'], $info['date'], 'n/a', $info['size'], 'n/a');
 			continue;
 		}
 	}
 }
-function printRow($n, $class, $mark, $path, $date, $dateDiff, $size, $sizeDiff) {
-echo "<tr class=\"{$class}\">
+function printRow($n, $class, $mark, $path, $dirInfo, $date, $dateDiff, $size, $sizeDiff) {
+	$path = htmlspecialchars($path);
+	if(!$dirInfo)
+		$path = highlightImportantFiles($path, $class);
+	echo "<tr class=\"{$class}\">
 	<td class=\"cell-number\">{$n}</td>
 	<td class=\"cell-type\">{$mark}</td>
-	<td class=\"cell-path\">{$path}</td>
+	<td class=\"cell-path\">{$path}{$dirInfo}</td>
 	<td class=\"cell-date time\">{$date}</td>
 	<td class=\"cell-date-diff\">{$dateDiff}</td>
 	<td class=\"cell-size\">{$size}</td>
 	<td class=\"cell-size-diff\">{$sizeDiff}</td>
 </tr>
 ";
+}
+function highlightImportantFiles($path, &$class) {
+	if(!preg_match('/\.(?:htaccess|html?|php)$/i', $path, $matches))
+		return $path;
+	$ext = $matches[0];
+	$class .= ' important';
+	return substr($path, 0, -strlen($ext)) . '<span class="importantExt">' . $ext . '</span>';
 }
 
 function printTableHeader() {

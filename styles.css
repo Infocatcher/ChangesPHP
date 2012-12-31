@@ -29,6 +29,9 @@ td, th { border: 1px solid #ddd; }
 .added { color: #900; }
 .removed { color: #777; }
 .changed { color: #93c; }
+.importantExt { color: #e00; }
+.important { background: #fff4f4; }
+.important:hover { background: #ffefef; }
 .cell-number,
 .cell-type {
 	text-align: center;
