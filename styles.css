@@ -32,6 +32,16 @@ td, th { border: 1px solid #ddd; }
 .importantExt { color: #e00; }
 .important { background: #fff4f4; }
 .important:hover { background: #ffefef; }
+
+.plain-link {
+	text-decoration: inherit !important;
+	color: inherit !important;
+}
+.plain-link:hover { text-decoration: underline !important; }
+.added :visited { color: #b55 !important; }
+.removed :visited { color: #999 !important; }
+.changed :visited { color: #96a !important; }
+
 .cell-number,
 .cell-type {
 	text-align: center;

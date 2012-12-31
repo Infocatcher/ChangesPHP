@@ -3,6 +3,7 @@
 error_reporting(E_ALL | E_STRICT);
 
 require('config.php');
+require('auth.php');
 require('changes.php');
 require('ui.php');
 

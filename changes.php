@@ -69,13 +69,21 @@ function compareEntries(&$newEntries, &$oldEntries) {
 	}
 }
 function printRow($n, $class, $mark, $path, $dirInfo, $date, $dateDiff, $size, $sizeDiff) {
-	$path = htmlspecialchars($path);
-	if(!$dirInfo)
-		$path = highlightImportantFiles($path, $class);
+	$htPath = htmlspecialchars($path);
+	if(!$dirInfo) {
+		$htPath = highlightImportantFiles($htPath, $class);
+		global $FILES_ACCESS;
+		if($FILES_ACCESS) {
+			global $DIR;
+			$fullPath = $DIR . DIRECTORY_SEPARATOR . $path;
+			$htPath = '<a class="plain-link" href="view.php?file='
+				. rawurlencode($fullPath) . '" target="_blank">' . $htPath . '</a>';
+		}
+	}
 	echo "<tr class=\"{$class}\">
 	<td class=\"cell-number\">{$n}</td>
 	<td class=\"cell-type\">{$mark}</td>
-	<td class=\"cell-path\">{$path}{$dirInfo}</td>
+	<td class=\"cell-path\">{$htPath}{$dirInfo}</td>
 	<td class=\"cell-date time\">{$date}</td>
 	<td class=\"cell-date-diff\">{$dateDiff}</td>
 	<td class=\"cell-size\">{$size}</td>
