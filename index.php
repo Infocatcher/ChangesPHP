@@ -2,10 +2,27 @@
 
 error_reporting(E_ALL | E_STRICT);
 
-require('config.php');
-require('auth.php');
-require('changes.php');
+session_start();
+
 require('ui.php');
+if(
+	isset($_POST['compare'])
+	|| isset($_POST['save'])
+	|| isset($_POST['delete'])
+	|| isset($_POST['logout'])
+)
+	checkToken();
+if(isset($_POST['logout'])) {
+	unset(
+		$_SESSION['changes:auth'],
+		$_SESSION['changes:view'],
+		$_SESSION['changes:csrfToken']
+	);
+}
+
+require('config.php');
+require($AUTH_MODULE);
+require('changes.php');
 
 header('X-Frame-Options: DENY');
 
@@ -134,7 +151,8 @@ elseif(isset($_POST['delete'])) {
 	}
 }
 
-echo '<form id="actions" action="./" method="POST">';
+echo '<form id="actions" action="./" method="POST">
+<input name="token" type="hidden" value="'. getToken() .'">';
 printProjectsList($DIR);
 printSavedList($DIR);
 echo '</form>';

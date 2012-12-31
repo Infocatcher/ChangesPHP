@@ -8,6 +8,7 @@ require('config.php');
 if(
 	$FILES_ACCESS
 	&& isset($_GET['file'])
+	&& isset($_SESSION['changes:auth'])
 	&& isset($_SESSION['changes:view'])
 ) {
 	$file = $_GET['file'];

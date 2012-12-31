@@ -19,7 +19,7 @@ HTML;
 HTML;
 }
 function printSavedList($selectedDir) {
-	global $DB_DIR;
+	global $AUTH_PASS, $DB_DIR;
 	global $newTime, $oldTime;
 
 	$entries = array();
@@ -46,10 +46,11 @@ function printSavedList($selectedDir) {
 	krsort($entries);
 
 	$checkedNew = $newTime == '***current***' || !isset($newTime) ? ' checked="checked"' : '';
+	$logoutBtn = $AUTH_PASS === '' ? '' : "\n\t<input name=\"logout\" type=\"submit\" value=\"Logout\" />";
 	echo <<<HTML
 	<input name="save" type="submit" value="Save snapshot" />
 	<input name="compare" type="submit" value="Compare selected snapshots" />
-	<input name="delete" type="submit" value="Delete checked snapshots" />
+	<input name="delete" type="submit" value="Delete checked snapshots" />{$logoutBtn}
 	<ul id="snapshots-list">
 		<li><input name="old" type="radio" value="***current***" style="visibility: hidden;"
 			/><label for="current"><input id="current" name="new" type="radio" value="***current***"{$checkedNew} />***current***</label>
@@ -81,6 +82,58 @@ HTML;
 	echo <<<HTML
 	</ul>
 HTML;
+}
+
+function getToken() {
+	if(!session_id())
+		session_start();
+	if(!isset($_SESSION['changes:csrfToken']))
+		return $_SESSION['changes:csrfToken'] = getRandomId();
+	return $_SESSION['changes:csrfToken'];
+}
+function checkToken() {
+	if(!isset($_POST['token']) || $_POST['token'] !== getToken())
+		exit();
+}
+function getRandomId($raw = false, $length = 128) {
+	$rnd = '';
+	if(
+		function_exists('openssl_random_pseudo_bytes')
+		&& strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN' // OpenSSL slow on Win
+	) {
+		$rnd = openssl_random_pseudo_bytes($length);
+	}
+	if(
+		$rnd === ''
+		&& is_readable('/dev/urandom')
+		&& ($hRand = @fopen('/dev/urandom', 'rb'))
+	) {
+		$rnd = fread($hRand, $length);
+		fclose($hRand);
+	}
+	if(
+		$rnd === ''
+		&& class_exists('COM')
+	) {
+		// http://msdn.microsoft.com/en-us/library/aa388176(VS.85).aspx
+		try {
+			$CAPIUtil = new COM('CAPICOM.Utilities.1');
+			$rnd = $CAPIUtil->GetRandom($length, 1 /*CAPICOM_ENCODE_BINARY*/);
+		}
+		catch(Exception $ex) {
+		}
+	}
+	if($rnd === '') {
+		for($i = 1; $i <= $length; ++$i)
+			$rnd .= chr(mt_rand(0, 255));
+	}
+	if($raw)
+		return $rnd;
+	return str_replace(
+		array('+', '/', '='),
+		array('-', '_', ''),
+		base64_encode(hash('sha256', $rnd, true))
+	);
 }
 
 ?>

@@ -1,10 +1,14 @@
 <?php
 
+$FILES_ACCESS = true;
+$AUTH_MODULE = 'auth.php';
+$AUTH_PASS = ''; // Empty string or hash of password
+// See getHash() function in auth.php
+
 $SERVER_CHARSET = 'utf-8';
 date_default_timezone_set('Europe/Moscow');
 $DB_DIR = 'snapshots';
 $JS_PATH = '/js/';
-$FILES_ACCESS = true;
 
 //$DIRS = getWritableDirectories('/home/user');
 $DIRS = array(
