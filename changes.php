@@ -17,7 +17,7 @@ function dbFile($dir, $time = '') {
 	$name = '@' . dechex(crc32($dir)) . ($time ? '-' . $time : '') . '.gz';
 	$max = 255 - strlen(__DIR__ . '/' . $DB_DIR . '/' . $name);
 	$dir = pathToFilename(substr($dir, 0, $max));
-	return $DB_DIR . '/' . $dir . $name;
+	return $DB_DIR . DIRECTORY_SEPARATOR . $dir . $name;
 }
 function dbFilePrefix($dir) {
 	global $DB_DIR;
@@ -170,7 +170,7 @@ function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {
 	while(($entry = readdir($handle)) !== false) {
 		if($entry === '.' || $entry === '..')
 			continue;
-		$entry = $dir . '/' . $entry;
+		$entry = $dir . DIRECTORY_SEPARATOR . $entry;
 		$key = substr($entry, $_strip);
 		$_out[$key] = filemtime($entry) . '-' . filesize($entry);
 		if(is_dir($entry)) {
@@ -190,7 +190,7 @@ function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {
 	foreach($entries as $entry) {
 		if($entry === '.' || $entry === '..')
 			continue;
-		$entry = $dir . '/' . $entry;
+		$entry = $dir . DIRECTORY_SEPARATOR . $entry;
 		$key = substr($entry, $_strip);
 		$_out[$key] = filemtime($entry) . '-' . filesize($entry);
 		if(is_dir($entry)) {
@@ -220,7 +220,7 @@ function parseEntryInfo($checksum, $raw = false) {
 		'size' => $raw ? (int) $data[1] : _n($data[1])
 	);
 	$info['dir'] = isset($data[2]) && $data[2] === 'd'
-		? '/ &lt;dir&gt;'
+		? DIRECTORY_SEPARATOR . '&nbsp;&lt;dir&gt;'
 		: '';
 	return $info;
 }
