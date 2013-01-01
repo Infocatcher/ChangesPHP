@@ -2,7 +2,8 @@
 
 $FILES_ACCESS = true;
 $AUTH_MODULE = 'auth.php';
-$AUTH_PASS = ''; // Empty string or hash of password
+$AUTH_PASS = '244afca6dd2d7300cdfeef4574f11c17da565058e40f1425e8a8e6e1e697e208'; // Hash of 'changes' string
+// $AUTH_PASS: empty string or hash of password
 // See getHash() function in auth.php
 
 $SERVER_CHARSET = 'utf-8';
