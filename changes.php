@@ -102,7 +102,7 @@ function highlightImportantFiles($path, &$class) {
 function printTableHeader() {
 	echo <<<HTML
 <div class="wait">
-Please wait…
+Please wait&hellip;
 <label id="autoScrollLabel" for="autoScrollCheckbox">
 	<input id="autoScrollCheckbox" type="checkbox" checked
 		onclick="autoScroll(this.checked);" />Autoscroll
