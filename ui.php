@@ -26,6 +26,7 @@ function printSavedList($selectedDir) {
 	$count = 0;
 	$prefix = dbFilePrefix($selectedDir);
 	$prefixLen = strlen($prefix);
+	$maxSizeLen = 0;
 	if(file_exists($DB_DIR) && ($handle = opendir($DB_DIR))) {
 		while(($entry = readdir($handle)) !== false) {
 			if(
@@ -34,9 +35,13 @@ function printSavedList($selectedDir) {
 			) {
 				$time = $m[1];
 				$date = "{$m[2]}-{$m[3]}-{$m[4]} {$m[5]}:{$m[6]}:{$m[7]}";
+				$file = $DB_DIR . DIRECTORY_SEPARATOR . $entry;
+				$size = '[' . _n(filesize($file)) . ' bytes]';
+				if(($sizeLen = strlen($size)) > $maxSizeLen)
+					$maxSizeLen = $sizeLen;
 				$entries[$time] = array(
 					'date' => $date,
-					'file' => $DB_DIR . '/' . $entry
+					'size' => $size
 				);
 				++$count;
 			}
@@ -60,17 +65,11 @@ HTML;
 	$i = 0;
 	foreach($entries as $time => $fileData) {
 		$date = $fileData['date'];
-		$file = $fileData['file'];
+		$size = str_pad($fileData['size'], $maxSizeLen, ' ', STR_PAD_LEFT);
 		$checkedOld = $time == $oldTime || !$i && !isset($oldTime) ? ' checked="checked"' : '';
 		$checkedNew = $time == $newTime ? ' checked="checked"' : '';
 		++$i;
 		$hideNew = $i == $count ? ' style="visibility: hidden;"' : '';
-		$size = str_pad(
-			'[' . _n(filesize($file)) . ' bytes]',
-			15, // [999 999 bytes],
-			' ',
-			STR_PAD_LEFT
-		);
 		echo <<<HTML
 		<li><input id="old-{$time}" name="old" type="radio" value="{$time}"{$checkedOld}
 			/><input id="new-{$time}" name="new" type="radio" value="{$time}"{$checkedNew}{$hideNew} /><label class="pre" for="old-{$time}"><span class="time">{$date}</span> {$size}</label>
