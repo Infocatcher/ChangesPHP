@@ -11,6 +11,8 @@ if(
 	$_SESSION['changes:auth'] = true;
 	if($FILES_ACCESS)
 		$_SESSION['changes:view'] = true;
+	else
+		unset($_SESSION['changes:view']);
 	session_regenerate_id();
 }
 else {
