@@ -225,7 +225,7 @@ function parseEntryInfo($checksum, $raw = false) {
 	return $info;
 }
 function _n($n, $decimals = 0) {
-	return number_format($n, $decimals, ',', ' ' /* &nbsp; */);
+	return number_format($n, $decimals, ',', ' ');
 }
 function _dn($n1, $n2, $decimals = 0) {
 	if($n1 === $n2)

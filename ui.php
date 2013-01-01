@@ -68,12 +68,12 @@ HTML;
 		$size = str_pad(
 			'[' . _n(filesize($file)) . ' bytes]',
 			15, // [999 999 bytes],
-			' ', // &nbsp;
+			' ',
 			STR_PAD_LEFT
 		);
 		echo <<<HTML
 		<li><input id="old-{$time}" name="old" type="radio" value="{$time}"{$checkedOld}
-			/><input id="new-{$time}" name="new" type="radio" value="{$time}"{$checkedNew}{$hideNew} /><label for="old-{$time}"><span class="time">{$date}</span> {$size}</label>
+			/><input id="new-{$time}" name="new" type="radio" value="{$time}"{$checkedNew}{$hideNew} /><label class="pre" for="old-{$time}"><span class="time">{$date}</span> {$size}</label>
 			<input name="delete-{$time}" type="checkbox" />
 		</li>
 
