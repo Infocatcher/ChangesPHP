@@ -26,6 +26,7 @@ if(
 <!DOCTYPE HTML>
 <meta charset="{$SERVER_CHARSET}" />
 <title>{$title}</title>
+<script type="text/javascript">if(top != self) top.location.replace(location);</script>
 <pre>{$content}</pre>
 HTML;
 }
