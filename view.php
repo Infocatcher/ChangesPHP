@@ -12,6 +12,17 @@ if(
 	&& isset($_SESSION['changes:view'])
 ) {
 	$file = $_GET['file'];
+
+	$found = false;
+	foreach($DIRS as $path) {
+		if(substr($file, 0, strlen($path) + 1) === $path . DIRECTORY_SEPARATOR) {
+			$found = true;
+			break;
+		}
+	}
+	if(!$found)
+		exit();
+
 	header('X-Frame-Options: DENY');
 	$title = htmlspecialchars($file);
 	if(is_file($_GET['file'])) {
