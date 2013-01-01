@@ -16,6 +16,12 @@ ul {
 }
 li { list-style: none; }
 .pre { white-space: pre; }
+li input,
+li label {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	vertical-align: middle;
+}
 table {
 	border-collapse: collapse;
 	width: 100%;
