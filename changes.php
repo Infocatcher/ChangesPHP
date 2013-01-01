@@ -1,6 +1,6 @@
 <?php
 
-// (c) Infocatcher 2012
+// (c) Infocatcher 2012-2013
 // version 0.1.0a4 - 2013-01-01
 // https://github.com/Infocatcher/ChangesPHP
 
