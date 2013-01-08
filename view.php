@@ -33,13 +33,17 @@ if(
 	else {
 		$content = "<strong>File not found:</strong>\n" . $file;
 	}
-	echo <<<HTML
+	$content = <<<HTML
 <!DOCTYPE HTML>
 <meta charset="{$SERVER_CHARSET}" />
 <title>{$title}</title>
 <script type="text/javascript">if(top != self) top.location.replace(location);</script>
 <pre>{$content}</pre>
 HTML;
+
+	header('Content-Length: ' . strlen($content));
+	header('Last-Modified: ' . gmdate("D, d M Y H:i:s \G\M\T", filemtime($file)));
+	echo $content;
 }
 
 ?>
