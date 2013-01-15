@@ -14,8 +14,10 @@ if(
 	$file = $_GET['file'];
 
 	$found = false;
+	$realFile = realpath($file);
 	foreach($DIRS as $path) {
-		if(substr($file, 0, strlen($path) + 1) === $path . DIRECTORY_SEPARATOR) {
+		$path = realpath($path);
+		if(substr($realFile, 0, strlen($path) + 1) === $path . DIRECTORY_SEPARATOR) {
 			$found = true;
 			break;
 		}

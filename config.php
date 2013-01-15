@@ -27,7 +27,7 @@ function getWritableDirectories($dir) {
 	while(($entry = readdir($handle)) !== false) {
 		if($entry === '.' || $entry === '..')
 			continue;
-		$fullPath = $dir . '/' . $entry;
+		$fullPath = $dir . DIRECTORY_SEPARATOR . $entry;
 		if(is_dir($fullPath) && is_writeable($fullPath)) {
 			//if($entry[0] !== '.' && substr_count($entry, '.') == 1)
 			//	$entry = 'www.' . $entry;
