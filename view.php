@@ -4,6 +4,7 @@ error_reporting(E_ALL | E_STRICT);
 
 session_start();
 require('config.php');
+require($AUTH_MODULE);
 
 if(
 	$FILES_ACCESS
