@@ -49,6 +49,13 @@ td, th { border: 1px solid #ddd; }
 .removed :visited { color: #999 !important; }
 .changed :visited { color: #96a !important; }
 
+.plain-link[href^="http://"]:hover,
+.plain-link[href^="https://"]:hover {
+	background: url("globe-small.png") left center no-repeat; /* http://findicons.com/icon/117469/globe_small */
+	padding-left: 14px;
+	margin-left: -14px;
+}
+
 .cell-number,
 .cell-type {
 	text-align: center;
