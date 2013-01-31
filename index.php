@@ -48,7 +48,18 @@ else {
 <head>
 	<title>Changes [<?php echo htmlspecialchars($DIR_NAME, ENT_NOQUOTES); ?>]</title>
 	<meta charset="<?php echo $SERVER_CHARSET; ?>" />
-	<script type="text/javascript">if(top != self) top.location.replace(location);</script>
+	<script type="text/javascript">
+		if(top != self)
+			top.location.replace(location);
+		if(window.history && history.replaceState) {
+			history.replaceState(
+				"",
+				document.title,
+				location.href.replace(/[?#].*$/, "")
+					+ "?project=" + encodeURIComponent("<?php echo $DIR_NAME; ?>")
+			);
+		}
+	</script>
 	<!--<link rel="stylesheet" type="text/css" href="styles.css" />-->
 	<style type="text/css">
 <?php
