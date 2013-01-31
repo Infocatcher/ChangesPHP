@@ -22,6 +22,7 @@ if(isset($_POST['logout'])) {
 
 require('config.php');
 require($AUTH_MODULE);
+require('mapping.php');
 require('changes.php');
 
 header('X-Frame-Options: DENY');

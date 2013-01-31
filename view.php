@@ -27,16 +27,10 @@ if(
 		exit();
 
 	$styles = $web = '';
-	foreach($MAPPINGS as $path => $url) {
-		$path = realpath($path);
-		$pathLen = strlen($path);
-		if(substr($realFile, 0, $pathLen) === $path) {
-			$pathEnd = substr($realFile, $pathLen);
-			if(DIRECTORY_SEPARATOR !== '/')
-				$pathEnd = str_replace(DIRECTORY_SEPARATOR, '/', $pathEnd);
-			$webUrlEnc = $url . str_replace('%2F', '/', rawurlencode($pathEnd));
-			$webUrlHtml = htmlspecialchars($url . $pathEnd);
-			$styles = <<<CSS
+	require('mapping.php');
+	$webUrl = getWebUrl($file, $webUrlHtml);
+	if($webUrl) {
+		$styles = <<<CSS
 
 	#openWeb-panel {
 		position: fixed; top: 0; right: 0;
@@ -48,12 +42,10 @@ if(
 	#openWeb:hover { opacity: 1; filter: alpha(opacity=100); }
 	#content { margin-top: 1.65em; }
 CSS;
-			$web = <<<HTML
-<span id="openWeb-panel"><a id="openWeb" href="{$webUrlEnc}">{$webUrlHtml}</a></span>
+		$web = <<<HTML
+<span id="openWeb-panel"><a id="openWeb" href="{$webUrl}">{$webUrlHtml}</a></span>
 
 HTML;
-			break;
-		}
 	}
 
 	header('X-Frame-Options: DENY');

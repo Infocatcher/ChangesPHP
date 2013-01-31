@@ -69,15 +69,25 @@ function compareEntries(&$newEntries, &$oldEntries) {
 	}
 }
 function printRow($n, $class, $mark, $path, $dirInfo, $date, $dateDiff, $size, $sizeDiff) {
+	global $FILES_ACCESS;
 	$htPath = htmlspecialchars($path);
-	if(!$dirInfo) {
+	if(!$dirInfo)
 		$htPath = highlightImportantFiles($htPath, $class);
-		global $FILES_ACCESS;
-		if($FILES_ACCESS) {
-			global $DIR;
-			$fullPath = $DIR . DIRECTORY_SEPARATOR . $path;
-			$htPath = '<a class="plain-link" href="view.php?file='
-				. rawurlencode($fullPath) . '" target="_blank">' . $htPath . '</a>';
+	if($FILES_ACCESS) {
+		global $DIR;
+		$fullPath = $DIR . DIRECTORY_SEPARATOR . $path;
+		$url = $dirInfo
+			? getWebUrl($fullPath)
+			: 'view.php?file=' . rawurlencode($fullPath);
+		if(isset($url)) {
+			if($dirInfo) {
+				$url .= '/';
+				if($dirInfo[0] === DIRECTORY_SEPARATOR) {
+					$htPath .= DIRECTORY_SEPARATOR;
+					$dirInfo = substr($dirInfo, 1);
+				}
+			}
+			$htPath = '<a class="plain-link" href="' . $url . '" target="_blank">' . $htPath . '</a>';
 		}
 	}
 	echo "<tr class=\"{$class}\">
