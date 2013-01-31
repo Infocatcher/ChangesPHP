@@ -2,7 +2,8 @@
 
 function getWebUrl($realFile, &$webUrlHtml = null) {
 	global $MAPPINGS;
-	$realFile = realpath($realFile);
+	if(($real = realpath($realFile)) !== false)
+		$realFile = $real;
 	foreach($MAPPINGS as $path => $url) {
 		$path = realpath($path);
 		$pathLen = strlen($path);

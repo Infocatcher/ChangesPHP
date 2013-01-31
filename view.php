@@ -16,6 +16,8 @@ if(
 
 	$found = false;
 	$realFile = realpath($file);
+	if($realFile === false)
+		$realFile = $file; // Will show "not found" message
 	foreach($DIRS as $path) {
 		$path = realpath($path);
 		if(substr($realFile, 0, strlen($path) + 1) === $path . DIRECTORY_SEPARATOR) {
@@ -50,7 +52,8 @@ HTML;
 
 	header('X-Frame-Options: DENY');
 	$title = htmlspecialchars($file);
-	if(is_file($_GET['file'])) {
+	if(is_file($file)) {
+		header('Last-Modified: ' . gmdate("D, d M Y H:i:s \G\M\T", filemtime($file)));
 		$content = htmlspecialchars(file_get_contents($file));
 		if($content === '')
 			$content = '&lt;<em>empty</em>&gt;';
@@ -75,7 +78,6 @@ HTML;
 HTML;
 
 	header('Content-Length: ' . strlen($content));
-	header('Last-Modified: ' . gmdate("D, d M Y H:i:s \G\M\T", filemtime($file)));
 	echo $content;
 }
 
