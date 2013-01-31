@@ -13,11 +13,15 @@ $JS_PATH = '/js/';
 
 //$DIRS = getWritableDirectories('/home/user');
 $DIRS = array(
-	'example.com' => '/home/user/example.com',
+	'example.com'     => '/home/user/example.com',
 	'sub.example.com' => '/home/user/sub.example.com',
-	'example.net' => '/home/user/example.net'
+	'example.net'     => '/home/user/example.net'
 );
-
+$MAPPINGS = array(
+	'/home/user/example.com/www'     => 'http://example.com',
+	'/home/user/sub.example.com/www' => 'http://sub.example.com',
+	'/home/user/example.net/www'     => 'http://example.net'
+);
 
 function getWritableDirectories($dir) {
 	$out = array();
