@@ -73,23 +73,23 @@ function printRow($n, $class, $mark, $path, $dirInfo, $date, $dateDiff, $size, $
 	$htPath = htmlspecialchars($path);
 	if(!$dirInfo)
 		$htPath = highlightImportantFiles($htPath, $class);
-	if($FILES_ACCESS) {
-		global $DIR;
-		$fullPath = $DIR . DIRECTORY_SEPARATOR . $path;
-		$url = $dirInfo
-			? getWebUrl($fullPath)
-			: 'view.php?file=' . rawurlencode($fullPath);
-		if(isset($url)) {
-			if($dirInfo) {
-				$url .= '/';
-				if($dirInfo[0] === DIRECTORY_SEPARATOR) {
-					$htPath .= DIRECTORY_SEPARATOR;
-					$dirInfo = substr($dirInfo, 1);
-				}
+
+	global $DIR;
+	$fullPath = $DIR . DIRECTORY_SEPARATOR . $path;
+	$url = $dirInfo || !$FILES_ACCESS
+		? getWebUrl($fullPath)
+		: 'view.php?file=' . rawurlencode($fullPath);
+	if(isset($url)) {
+		if($dirInfo) {
+			$url .= '/';
+			if($dirInfo[0] === DIRECTORY_SEPARATOR) {
+				$htPath .= DIRECTORY_SEPARATOR;
+				$dirInfo = substr($dirInfo, 1);
 			}
-			$htPath = '<a class="plain-link" href="' . $url . '" target="_blank">' . $htPath . '</a>';
 		}
+		$htPath = '<a class="plain-link" href="' . $url . '" target="_blank">' . $htPath . '</a>';
 	}
+
 	echo "<tr class=\"{$class}\">
 	<td class=\"cell-number\">{$n}</td>
 	<td class=\"cell-type\">{$mark}</td>
