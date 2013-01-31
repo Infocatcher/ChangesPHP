@@ -3,14 +3,13 @@
 function printProjectsList($selectedDir) {
 	global $DIRS;
 	echo <<<HTML
-	<select id="projects-list" name="dir" onchange="document.getElementsByName('select')[0].click();">
+	<select id="projects-list" name="project" onchange="document.getElementsByName('select')[0].click();">
 
 HTML;
 	foreach($DIRS as $name => $dir) {
 		$selected = $dir === $selectedDir ? ' selected="selected"' : '';
-		$dir  = htmlspecialchars($dir);
 		$name = htmlspecialchars($name);
-		echo "<option value=\"{$dir}\"{$selected}>{$name}</option>\n";
+		echo "<option value=\"{$name}\"{$selected}>{$name}</option>\n";
 	}
 	echo <<<HTML
 	</select>

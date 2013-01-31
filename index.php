@@ -27,12 +27,15 @@ require('changes.php');
 
 header('X-Frame-Options: DENY');
 
-if(
-	isset($_POST['dir'])
-	&& is_dir($_POST['dir'])
-	&& ($DIR_NAME = array_search($_POST['dir'], $DIRS, true)) !== false
-) {
-	$DIR = $_POST['dir'];
+$project = null;
+if(isset($_GET['project']))
+	$project = $_GET['project'];
+elseif(isset($_POST['project']))
+	$project = $_POST['project'];
+
+if(isset($project) && isset($DIRS[$project])) {
+	$DIR = $DIRS[$project];
+	$DIR_NAME = $project;
 }
 else {
 	$DIR = reset($DIRS);
