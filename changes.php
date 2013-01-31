@@ -1,7 +1,7 @@
 <?php
 
 // (c) Infocatcher 2012-2013
-// version 0.1.0a4 - 2013-01-01
+// version 0.1.0a5 - 2013-01-31
 // https://github.com/Infocatcher/ChangesPHP
 
 define('DIRS_PARSER_WORK', 0.2);
