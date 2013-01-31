@@ -73,6 +73,8 @@ HTML;
 		margin: 0; padding: 0;
 	}
 	#content { font: 13px "Courier New", monospace; margin: 0.4em 0.6em; }{$styles}
+	:link    { text-decoration: underline; color: #00e; }
+	:visited { text-decoration: underline; color: #551a8b }
 </style>
 {$web}<pre id="content">{$content}</pre>
 HTML;
