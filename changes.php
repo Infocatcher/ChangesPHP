@@ -120,8 +120,25 @@ Please wait&hellip;
 		onclick="autoScroll(this.checked);" />Autoscroll
 </label>
 </div>
-<script type="text/javascript">autoScroll(document.getElementById("autoScrollCheckbox").checked);</script>
-<table id="compareResults">
+<script type="text/javascript">
+if(document.getElementById("autoScrollCheckbox").checked)
+	autoScroll(true);
+else {
+	var scrollToResultsDelay = 25;
+	var scrollToResultsStop = new Date().getTime() + 1500;
+	setTimeout(function scrollToResults() {
+		var res = document.getElementById("compare");
+		res.scrollIntoView();
+		//console.log(document.documentElement.scrollTop + " < " + res.offsetTop);
+		if(
+			new Date().getTime() < scrollToResultsStop
+			&& document.documentElement.scrollTop < res.offsetTop
+		)
+			setTimeout(scrollToResults, scrollToResultsDelay);
+	}, scrollToResultsDelay);
+}
+</script>
+<table id="compare">
 <thead><tr>
 	<th id="th-number">&nbsp;</th>
 	<th id="th-type" title="* = changed &#10;+ = added &#10;&#8722; = removed">&nbsp;</th>
@@ -144,7 +161,7 @@ function printTableFooter() {
 <script type="text/javascript" src="sortRows.js"></script>
 <script type="text/javascript">
 	autoScroll(false);
-	new RowsSorter("compareResults").sortRows(0, false, true);
+	new RowsSorter("compare").sortRows(0, false, true);
 </script>
 ';
 }
