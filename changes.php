@@ -270,11 +270,21 @@ function _dt($time) {
 
 function saveSnapshot() {
 	global $DIR, $DB_DIR;
-	if(!file_exists($DB_DIR))
+	if(!file_exists($DB_DIR)) {
 		mkdir($DB_DIR, 0755);
+		protectDir($DB_DIR);
+	}
 	$currentEntries = getEntries($DIR);
 	$dbFile = dbFile($DIR, date('YmdHis'));
 	saveData($currentEntries, $dbFile);
+}
+function protectDir($dir) {
+	global $SERVER_CHARSET;
+	file_put_contents($dir . DIRECTORY_SEPARATOR . '.htaccess', 'deny from all');
+	file_put_contents(
+		$dir . DIRECTORY_SEPARATOR . 'index.html',
+		'<!DOCTYPE HTML><meta charset="' . $SERVER_CHARSET . '"><title>Nothing here</title>'
+	);
 }
 
 // Tries to don't allocate nested memory...
