@@ -10,6 +10,7 @@ $SERVER_CHARSET = 'utf-8';
 date_default_timezone_set('Europe/Moscow');
 $DB_DIR = 'snapshots';
 $JS_PATH = '/js/';
+$AUTOSCROLL = true;
 
 //$DIRS = getWritableDirectories('/home/user');
 $DIRS = array(

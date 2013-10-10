@@ -77,6 +77,7 @@ else {
 		else if(!on && scrollTimer) {
 			clearInterval(scrollTimer);
 			scrollTimer = 0;
+			scrollToBottom();
 		}
 	}
 	function scrollToBottom() {

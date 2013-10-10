@@ -110,15 +110,17 @@ function highlightImportantFiles($path, &$class) {
 }
 
 function printTableHeader() {
+	global $AUTOSCROLL;
+	$autoScrollChecked = $AUTOSCROLL ? ' checked' : '';
 	echo <<<HTML
 <div class="wait">
 Please wait&hellip;
 <label id="autoScrollLabel" for="autoScrollCheckbox">
-	<input id="autoScrollCheckbox" type="checkbox" checked
+	<input id="autoScrollCheckbox" type="checkbox"{$autoScrollChecked}
 		onclick="autoScroll(this.checked);" />Autoscroll
 </label>
 </div>
-<script type="text/javascript">autoScroll(true);</script>
+<script type="text/javascript">autoScroll(document.getElementById("autoScrollCheckbox").checked);</script>
 <table id="compareResults">
 <thead><tr>
 	<th id="th-number">&nbsp;</th>
@@ -142,7 +144,6 @@ function printTableFooter() {
 <script type="text/javascript" src="sortRows.js"></script>
 <script type="text/javascript">
 	autoScroll(false);
-	scrollToBottom();
 	new RowsSorter("compareResults").sortRows(0, false, true);
 </script>
 ';
