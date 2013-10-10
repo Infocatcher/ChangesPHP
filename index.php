@@ -51,7 +51,7 @@ else {
 	<script type="text/javascript">
 		if(top != self)
 			top.location.replace(location);
-		if(window.history && history.replaceState) {
+		if(!/[?&]project=/.test(location.search) && window.history && history.replaceState) {
 			history.replaceState(
 				"",
 				document.title,
