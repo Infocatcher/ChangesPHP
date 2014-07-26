@@ -177,7 +177,7 @@ function getStats($time, $memory, $desc = '') {
 function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {
 	if(!is_writeable($dir)) {
 		echo "*** \"$dir\" aren't writeable ***<br>\n";
-		return;
+		return $_out;
 	}
 	$now = microtime(true);
 	if(func_num_args() == 1) { // First external call
@@ -193,7 +193,7 @@ function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {
 	$handle = opendir($dir);
 	if(!$handle) {
 		echo "*** opendir(\"$dir\") failed ***<br>\n";
-		return;
+		return $_out;
 	}
 	while(($entry = readdir($handle)) !== false) {
 		if($entry === '.' || $entry === '..')
@@ -213,7 +213,7 @@ function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {
 	$entries = scandir($dir);
 	if($entries === false) {
 		echo "*** scandir(\"$dir\") failed ***<br>\n";
-		return;
+		return $_out;
 	}
 	foreach($entries as $entry) {
 		if($entry === '.' || $entry === '..')
