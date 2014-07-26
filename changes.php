@@ -176,7 +176,7 @@ function getStats($time, $memory, $desc = '') {
 
 function &getEntries($dir, &$_strip = 0, &$_pauseTime = 0, &$_out = array()) {
 	if(!is_writeable($dir)) {
-		echo "*** \"$dir\" aren't writeable ***<br>\n";
+		echo "*** \"$dir\" isn't writable ***<br>\n";
 		return $_out;
 	}
 	$now = microtime(true);
