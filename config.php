@@ -2,6 +2,8 @@
 
 $FILES_ACCESS = true;
 $AUTH_MODULE = 'auth.php';
+$AUTH_SALT = '4bLEXig5dWow ';
+$AUTH_SALT2 = '~GFP5OHh1F5aR';
 $AUTH_PASS = '244afca6dd2d7300cdfeef4574f11c17da565058e40f1425e8a8e6e1e697e208'; // Hash of 'changes' string
 // $AUTH_PASS: empty string or hash of password
 // See getHash() function in auth.php

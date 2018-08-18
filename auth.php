@@ -39,7 +39,8 @@ HTML
 }
 
 function getHash($pass) {
-	return hash('sha256', '4bLEXig5dWow ' . $pass . '~GFP5OHh1F5aR');
+	global $AUTH_SALT, $AUTH_SALT2;
+	return hash('sha256', $AUTH_SALT . $pass . $AUTH_SALT2);
 }
 
 ?>
