@@ -12,7 +12,14 @@ $DB_DIR = 'snapshots';
 $JS_PATH = '/js/';
 $AUTOSCROLL = true;
 
-//$DIRS = getWritableDirectories('/home/user');
+/*
+$DIRS = getWritableDirectories('/home/user');
+$MAPPINGS = array();
+foreach($DIRS as $dir => $fullPath) {
+	$MAPPINGS[$fullPath . '/www'] = 'http://' . $dir;
+}
+*/
+
 $DIRS = array(
 	'example.com'     => '/home/user/example.com',
 	'sub.example.com' => '/home/user/sub.example.com',
@@ -33,7 +40,7 @@ function getWritableDirectories($dir) {
 		if($entry === '.' || $entry === '..')
 			continue;
 		$fullPath = $dir . DIRECTORY_SEPARATOR . $entry;
-		if(is_dir($fullPath) && is_writeable($fullPath)) {
+		if(looksLikeDomain($entry) && is_dir($fullPath) && is_writeable($fullPath)) {
 			//if($entry[0] !== '.' && substr_count($entry, '.') == 1)
 			//	$entry = 'www.' . $entry;
 			$out[$entry] = $fullPath;
@@ -41,6 +48,9 @@ function getWritableDirectories($dir) {
 	}
 	closedir($handle);
 	return $out;
+}
+function looksLikeDomain($dir) {
+	return preg_match('/^[a-z-]+(\.[a-z-]+)+$/', $dir) === 1;
 }
 
 ?>
