@@ -37,7 +37,7 @@ if(isset($project) && isset($DIRS[$project])) {
 	$DIR = $DIRS[$project];
 	$DIR_NAME = $project;
 }
-else {
+else if(!isset($DIR) && !isset($DIR_NAME)) { // Or use defaults from config.php
 	$DIR = reset($DIRS);
 	$DIR_NAME = key($DIRS);
 }

@@ -31,6 +31,10 @@ $MAPPINGS = array(
 	'/home/user/example.net/www'     => 'http://example.net'
 );
 
+// Set default
+$DIR_NAME = 'sub.example.com';
+$DIR = $DIRS[$DIR_NAME];
+
 function getWritableDirectories($dir) {
 	$out = array();
 	$handle = opendir($dir);
