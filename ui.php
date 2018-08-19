@@ -50,7 +50,8 @@ function printSavedList($selectedDir) {
 	krsort($entries);
 
 	$checkedNew = $newTime == '***current***' || !isset($newTime) ? ' checked="checked"' : '';
-	$logoutBtn = $AUTH_PASS === '' ? '' : "\n\t<input name=\"logout\" type=\"submit\" value=\"Logout\" />";
+	$logoutBtn = $AUTH_PASS === '' ? '' : '
+	<input style="float: right;" name="logout" type="submit" value="Logout" />';
 	echo <<<HTML
 	<input name="save" type="submit" value="Save snapshot" />
 	<input name="compare" type="submit" value="Compare selected snapshots" />

@@ -19,6 +19,11 @@ else {
 	$action = htmlspecialchars($_SERVER['REQUEST_URI']);
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
 	header('X-Frame-Options: DENY');
+	$hash = isset($_POST['password'])
+		? '<div style="font-family: monospace; margin-top: 0.5em;">Hash: '
+			. getHash($_POST['password'])
+			. '<br />(config.php &#8658; $AUTH_PASS)</div>'
+		: '';
 	exit(
 <<<HTML
 <!DOCTYPE HTML>
@@ -26,8 +31,8 @@ else {
 <meta charset="{$SERVER_CHARSET}" />
 <script type="text/javascript">if(top != self) top.location.replace(location);</script>
 <form name="enter" action="{$action}" method="post">
-	<input name="password" type="password">
-	<input type="submit" value="Let's go!">
+	<input name="password" type="password" />
+	<input type="submit" value="Let's go!" />{$hash}
 	<script type="text/javascript">
 		if(location.hash)
 			document.forms.enter.action += location.hash;
