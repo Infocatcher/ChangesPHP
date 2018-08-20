@@ -59,7 +59,7 @@ HTML;
 			$content = '&lt;<em>empty</em>&gt;';
 	}
 	else {
-		$content = "<strong>File not found:</strong>\n" . $file;
+		$content = "<strong>File not found:</strong>\n" . htmlspecialchars($file);
 	}
 	$content = <<<HTML
 <!DOCTYPE HTML>
