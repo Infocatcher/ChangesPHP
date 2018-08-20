@@ -1,9 +1,23 @@
 <?php
 
-function getWebUrl($realFile, &$webUrlHtml = null) {
+function isAllowedPath($file) {
+	global $DIRS;
+	$realFile = realpath($file);
+	if($realFile === false)
+		$realFile = $file; // File not found, fallback to show "not found" message
+	foreach($DIRS as $path) {
+		$path = realpath($path);
+		if($path !== false && substr($realFile, 0, strlen($path) + 1) === $path . DIRECTORY_SEPARATOR)
+			return true;
+	}
+	return false;
+}
+
+function getWebUrl($file, &$webUrlHtml = null) {
 	global $MAPPINGS;
-	if(($real = realpath($realFile)) !== false)
-		$realFile = $real;
+	$realFile = realpath($file);
+	if($realFile === false)
+		$realFile = $file;
 	foreach($MAPPINGS as $path => $url) {
 		$path = realpath($path);
 		$pathLen = strlen($path);

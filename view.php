@@ -14,22 +14,11 @@ if(
 ) {
 	$file = $_GET['file'];
 
-	$found = false;
-	$realFile = realpath($file);
-	if($realFile === false)
-		$realFile = $file; // Will show "not found" message
-	foreach($DIRS as $path) {
-		$path = realpath($path);
-		if(substr($realFile, 0, strlen($path) + 1) === $path . DIRECTORY_SEPARATOR) {
-			$found = true;
-			break;
-		}
-	}
-	if(!$found)
+	require('mapping.php');
+	if(!isAllowedPath($file))
 		exit();
 
 	$styles = $web = '';
-	require('mapping.php');
 	$webUrl = getWebUrl($file, $webUrlHtml);
 	if($webUrl) {
 		$styles = <<<CSS
@@ -51,20 +40,20 @@ HTML;
 	}
 
 	header('X-Frame-Options: DENY');
-	$title = htmlspecialchars($file);
+	$fileHtml = htmlspecialchars($file);
 	if(is_file($file)) {
 		header('Last-Modified: ' . gmdate("D, d M Y H:i:s \G\M\T", filemtime($file)));
 		$content = htmlspecialchars(file_get_contents($file));
 		if($content === '')
-			$content = '&lt;<em>empty</em>&gt;';
+			$content = '&lt;<em>empty file</em>&gt;';
 	}
 	else {
-		$content = "<strong>File not found:</strong>\n" . htmlspecialchars($file);
+		$content = "<strong>File not found:</strong>\n" . $fileHtml;
 	}
 	$content = <<<HTML
 <!DOCTYPE HTML>
 <meta charset="{$SERVER_CHARSET}" />
-<title>{$title}</title>
+<title>{$fileHtml}</title>
 <script type="text/javascript">if(top != self) top.location.replace(location);</script>
 <style type="text/css">
 	html, body {
