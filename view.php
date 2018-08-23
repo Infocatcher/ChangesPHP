@@ -6,12 +6,7 @@ session_start();
 require('config.php');
 require($AUTH_MODULE);
 
-if(
-	$FILES_ACCESS
-	&& isset($_GET['file'])
-	&& isset($_SESSION['changes:auth'])
-	&& isset($_SESSION['changes:view'])
-) {
+if($FILES_ACCESS && isset($_GET['file'])) {
 	$file = $_GET['file'];
 
 	require('mapping.php');
