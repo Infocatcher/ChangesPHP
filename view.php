@@ -8,10 +8,21 @@ require($AUTH_MODULE);
 
 if($FILES_ACCESS && isset($_GET['file'])) {
 	$file = $_GET['file'];
+	$fileHtml = htmlspecialchars($file);
 
 	require('mapping.php');
-	if(!isAllowedPath($file))
-		exit();
+	if(!isAllowedPath($file)) {
+		header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+		exit(
+<<<HTML
+<!DOCTYPE HTML>
+<title>Changes: Access denied</title>
+<meta charset="{$SERVER_CHARSET}" />
+<pre><strong>Access denied:</strong>
+{$fileHtml}</pre>
+HTML
+		);
+	}
 
 	$styles = $web = '';
 	$webUrl = getWebUrl($file, $webUrlHtml);
@@ -35,7 +46,6 @@ HTML;
 	}
 
 	header('X-Frame-Options: DENY');
-	$fileHtml = htmlspecialchars($file);
 	if(is_file($file)) {
 		header('Last-Modified: ' . gmdate("D, d M Y H:i:s \G\M\T", filemtime($file)));
 		$content = htmlspecialchars(file_get_contents($file));
