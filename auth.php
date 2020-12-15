@@ -20,7 +20,8 @@ else {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
 	header('X-Frame-Options: DENY');
 	$hash = isset($_POST['password'])
-		? '<div style="font-family: monospace; margin-top: 0.5em;">Hash: '
+		? '<div style="margin-top: 0.5em;"><strong>Wrong password!</strong></div>'
+			. '<div style="margin-top: 0.5em; font: 0.7em monospace; opacity: 0.5;">Hash: '
 			. getHash($_POST['password'])
 			. '<br />(config.php &#8658; $AUTH_PASS)</div>'
 		: '';
